@@ -13,7 +13,7 @@
 
     <modules>
         <module>test-cloud-server-eureka</module>
-        <module>test-cloud-server-provider1</module>
+        <module>test-cloud-server-provider</module>
         <module>test-cloud-server-consumer-feign</module>
     </modules>
 

@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>test-cloud-consumer-feign</artifactId>
+    <artifactId>test-cloud-server-consumer-feign</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>test-cloud-consumer-feign</name>
+    <name>test-cloud-server-consumer-feign</name>
     <description>使用feign的消费者</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,7 +25,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-hystrix</artifactId>
         </dependency>
-        <!--LOMBOK-->
+        <!---->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

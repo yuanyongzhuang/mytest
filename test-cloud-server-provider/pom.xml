@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>test-cloud-provider1</artifactId>
+    <artifactId>test-cloud-server-provider</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>test-cloud-provider1</name>
+    <name>test-cloud-server-provider</name>
     <description>生产者1</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
