@@ -1,4 +1,4 @@
-package com.example.testcloudprovider1.controller;
+package com.example.testcloudprovider.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

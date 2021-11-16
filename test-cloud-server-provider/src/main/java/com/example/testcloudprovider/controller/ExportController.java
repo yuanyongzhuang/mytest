@@ -1,6 +1,6 @@
-package com.example.testcloudprovider1.controller;
+package com.example.testcloudprovider.controller;
 
-import com.example.testcloudprovider1.service.IExportJobService;
+import com.example.testcloudprovider.service.IExportJobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +12,7 @@ import java.io.OutputStream;
 @RestController
 @RequestMapping({"/export"})
 public class ExportController {
+
     @Autowired
     IExportJobService exportJobService;
 
@@ -23,7 +24,7 @@ public class ExportController {
         FileInputStream inStream = null;
 
         try {
-            inStream = new FileInputStream("D:" + File.separator + "AAAAA_yyz_wrod" + File.separator + "java" + File.separator + "bbb" + File.separator + "订单管理 (7).xls");
+            inStream = new FileInputStream("D:" + File.separator + "AAAAA_yyz_wrod" + File.separator + "java" + File.separator + "bbb" + File.separator + "订单管理.xlsx");
             byte[] buf = new byte[4096];
             setResponseHeader(response, "订单管理.xlsx");
 
