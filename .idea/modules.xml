@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/test-cloud-server-consumer-feign/test-cloud-server-consumer-feign.iml" filepath="$PROJECT_DIR$/test-cloud-server-consumer-feign/test-cloud-server-consumer-feign.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test-cloud-server-eureka/test-cloud-server-eureka.iml" filepath="$PROJECT_DIR$/test-cloud-server-eureka/test-cloud-server-eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test-cloud-server-provider/test-cloud-server-provider.iml" filepath="$PROJECT_DIR$/test-cloud-server-provider/test-cloud-server-provider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testcloud.iml" filepath="$PROJECT_DIR$/testcloud.iml" />
+    </modules>
+  </component>
+</project>

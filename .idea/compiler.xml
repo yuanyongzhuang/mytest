@@ -8,17 +8,26 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="cloud" />
-        <module name="test-cloud-provider1" />
         <module name="test-cloud-consumer-feign" />
+        <module name="test-cloud-server-consumer-feign" />
+        <module name="test-cloud-server-provider" />
         <module name="test-cloud-server-eureka" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="test-cloud-provider1" target="11" />
+      <module name="test-cloud-server-consumer-feign" target="1.8" />
+      <module name="test-cloud-server-eureka" target="11" />
+      <module name="test-cloud-server-provider" target="11" />
+      <module name="testcloud" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="test-cloud-consumer-feign" options="" />
       <module name="test-cloud-provider1" options="-parameters" />
       <module name="test-cloud-server-eureka" options="-parameters" />
+      <module name="test-cloud-server-provider" options="-parameters" />
     </option>
   </component>
 </project>
