@@ -16,9 +16,6 @@ public class ExportController {
     @Autowired
     IExportJobService exportJobService;
 
-    public ExportController() {
-    }
-
     @GetMapping({"/download"})
     public void download(HttpServletResponse response) {
         FileInputStream inStream = null;

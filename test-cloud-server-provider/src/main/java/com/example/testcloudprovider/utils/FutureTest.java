@@ -61,10 +61,7 @@ public class FutureTest {
 
         ConcurrentMap<String, String> concurrentMap = new ConcurrentHashMap<>();
 
-//        concurrentMap.put("task", task.get(1, TimeUnit.SECONDS));
         concurrentMap.put("task", task.get());
-        concurrentMap.put("task1", task1.get()); // get()阻塞方法
-        concurrentMap.put("task2", task2.get());
 
         System.out.println(System.currentTimeMillis() - start);
         System.out.println(concurrentMap);
