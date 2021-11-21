@@ -1,6 +1,7 @@
 package com.example.testcloudprovider.utils;
 
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -96,6 +97,37 @@ public class ExportUtil {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        }
+    }
+    /**
+     * 导出excel大文件到文件目录下
+     * @param workBook
+     * @param uri
+     * @param fileName
+     */
+    public static void saveBigExcelByPath(SXSSFWorkbook workBook, String uri, String fileName){
+        File savefile = new File(uri);
+        if (!savefile.exists()) {
+            savefile.mkdirs();
+        }
+        FileOutputStream out = null;
+        try{
+            out = new FileOutputStream(uri + File.separator + fileName +".xlsx");
+            workBook.write(out);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (workBook != null) {
+                // 删除临时文件，很重要，否则磁盘可能会被写满
+                workBook.dispose();
             }
         }
     }
