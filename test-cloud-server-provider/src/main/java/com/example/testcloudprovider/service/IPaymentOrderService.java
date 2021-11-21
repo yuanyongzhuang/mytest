@@ -14,4 +14,6 @@ import com.example.testcloudprovider.entity.PaymentOrder;
 public interface IPaymentOrderService extends IService<PaymentOrder> {
 
     void addList();
+
+    void exportOrder();
 }

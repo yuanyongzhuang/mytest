@@ -2,9 +2,11 @@ package com.example.testcloudprovider.utils;
 
 import org.springframework.util.StringUtils;
 
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -471,5 +473,16 @@ public class DateTimeUtil {
             return null;
         }
         return DateTimeFormatter.ofPattern(pattern).format(localDate.plusDays(day));
+    }
+
+    /**
+     *
+     * @param date
+     * @param pattern
+     * @return
+     */
+    public static String fmtDateToStr(Date date, String pattern){
+        SimpleDateFormat format = new SimpleDateFormat(pattern);
+        return format.format(date);
     }
 }

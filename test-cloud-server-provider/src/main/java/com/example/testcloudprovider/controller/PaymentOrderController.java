@@ -1,6 +1,7 @@
 package com.example.testcloudprovider.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.testcloudprovider.service.IPaymentOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +32,13 @@ public class PaymentOrderController {
     IPaymentOrderService paymentOrderService;
 
     @PostMapping({"/add"})
-    public void download() {
+    public void add() {
         paymentOrderService.addList();
+    }
+
+    @PostMapping("/exportOrder")
+    public void exportOrder(){
+        paymentOrderService.exportOrder();
     }
 
 }
