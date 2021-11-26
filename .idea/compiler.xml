@@ -16,10 +16,10 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="test-cloud-provider1" target="11" />
-      <module name="test-cloud-server-consumer-feign" target="1.8" />
+      <module name="test-cloud-server-consumer-feign" target="11" />
       <module name="test-cloud-server-eureka" target="11" />
       <module name="test-cloud-server-provider" target="11" />
-      <module name="testcloud" target="1.5" />
+      <module name="testcloud" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

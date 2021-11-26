@@ -16,4 +16,6 @@ public interface IPaymentOrderService extends IService<PaymentOrder> {
     void addList();
 
     void exportOrder();
+
+    void huToolExport();
 }

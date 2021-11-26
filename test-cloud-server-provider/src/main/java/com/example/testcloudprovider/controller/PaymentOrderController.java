@@ -41,5 +41,10 @@ public class PaymentOrderController {
         paymentOrderService.exportOrder();
     }
 
+    @PostMapping("/huToolExport")
+    public void huToolExport(){
+        paymentOrderService.huToolExport();
+    }
+
 }
 

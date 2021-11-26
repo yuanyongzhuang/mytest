@@ -2,11 +2,13 @@ package com.example.testcloudprovider.service.impl;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import cn.afterturn.easypoi.excel.annotation.ExcelCollection;
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.testcloudprovider.dto.OrderRelationExportDTO;
 import com.example.testcloudprovider.dto.PaymentOrderExportDTO;
+import com.example.testcloudprovider.entity.ExcelPaymentOrderDTO;
 import com.example.testcloudprovider.entity.PaymentOrder;
 import com.example.testcloudprovider.mapper.PaymentOrderMapper;
 import com.example.testcloudprovider.service.IPaymentOrderService;
@@ -15,6 +17,7 @@ import com.example.testcloudprovider.utils.DateTimeUtil;
 import com.example.testcloudprovider.utils.Excel.ExcelUtil;
 import com.example.testcloudprovider.utils.Excel.ExportParam;
 import com.example.testcloudprovider.utils.ExportUtil;
+import com.example.testcloudprovider.utils.SXSSFExcelUtils.HuToolExcelUtil;
 import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -27,6 +30,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -214,5 +218,20 @@ public class PaymentOrderServiceImpl extends ServiceImpl<PaymentOrderMapper, Pay
         ExportUtil.saveBigExcelByPath(workbook, "D:" + File.separator + "AAAAA_yyz_wrod" + File.separator + "java" + File.separator + "bbb", "订单管理");
         System.out.println("导出完成时间：" + (t3 - t2));
         System.out.println("总完成时间：" + (t3 - t0));
+    }
+
+    @Override
+    public void huToolExport() {
+        long t0 = System.currentTimeMillis();
+        List<PaymentOrder> list = this.list(new LambdaQueryWrapper<>());
+        List<ExcelPaymentOrderDTO> dtoList = list.stream().map(m-> BeanUtil.copyProperties(m,ExcelPaymentOrderDTO.class)).collect(Collectors.toList());
+        long t1 = System.currentTimeMillis();
+        System.out.println("导出数量" + dtoList.size() + "，查询时间：" + (t1 - t0));
+        HuToolExcelUtil.exportBigExcel(ExcelPaymentOrderDTO.class,dtoList,
+                "D:" + File.separator + "AAAAA_yyz_wrod" + File.separator + "java" + File.separator + "bbb"+ File.separator +"hutool订单管理.xlsx",
+                "hutoolOrder");
+        long t3 = System.currentTimeMillis();
+        System.out.println("导出完成，完成时间：" + (t3 - t0));
+
     }
 }
