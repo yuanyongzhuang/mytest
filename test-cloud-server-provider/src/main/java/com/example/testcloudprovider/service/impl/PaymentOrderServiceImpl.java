@@ -9,6 +9,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.testcloudprovider.dto.OrderRelationExportDTO;
 import com.example.testcloudprovider.dto.PaymentOrderExportDTO;
 import com.example.testcloudprovider.entity.ExcelPaymentOrderDTO;
+import com.example.testcloudprovider.entity.NewExcelOrderDTO;
+import com.example.testcloudprovider.entity.Order;
 import com.example.testcloudprovider.entity.PaymentOrder;
 import com.example.testcloudprovider.mapper.PaymentOrderMapper;
 import com.example.testcloudprovider.service.IPaymentOrderService;
@@ -22,6 +24,7 @@ import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cglib.beans.BeanMap;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -29,6 +32,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -228,6 +232,63 @@ public class PaymentOrderServiceImpl extends ServiceImpl<PaymentOrderMapper, Pay
         long t1 = System.currentTimeMillis();
         System.out.println("导出数量" + dtoList.size() + "，查询时间：" + (t1 - t0));
         HuToolExcelUtil.exportBigExcel(ExcelPaymentOrderDTO.class,dtoList,
+                "D:" + File.separator + "AAAAA_yyz_wrod" + File.separator + "java" + File.separator + "bbb"+ File.separator +"hutool--订单管理.xlsx",
+                "hutoolOrder");
+        long t3 = System.currentTimeMillis();
+        System.out.println("导出完成，完成时间：" + (t3 - t0));
+
+    }
+
+    @Override
+    public void huToolNeedMergeExport() {
+        long t0 = System.currentTimeMillis();
+        List<PaymentOrder> list = this.list(new LambdaQueryWrapper<>());
+        //模拟订单中有多个子订单
+        List<NewExcelOrderDTO> newOrderList = new ArrayList<>();
+        list.forEach(paymentOrder -> {
+            NewExcelOrderDTO dto = new NewExcelOrderDTO();
+            BeanUtils.copyProperties(paymentOrder,dto);
+            List<Order> orderList = new ArrayList<>();
+            Order order = new Order();
+            Integer orderId = paymentOrder.getOrderId();
+            if((30 > orderId && orderId > 27)){
+                orderList.add(order);
+                orderList.add(order);
+                orderList.add(order);
+            }
+            orderList.add(order);
+            dto.setOrderRelationExportDTOS(orderList);
+
+            newOrderList.add(dto);
+
+        });
+        //数据分组组合 按照订单号
+        List<ExcelPaymentOrderDTO>  dtoList = new ArrayList<>();
+        newOrderList.forEach(newOrder ->{
+            List<Order> orderRelationExportDTOS = newOrder.getOrderRelationExportDTOS();
+            orderRelationExportDTOS.forEach(order -> {
+                ExcelPaymentOrderDTO excelDTO = new ExcelPaymentOrderDTO();
+                BeanUtils.copyProperties(newOrder,excelDTO);
+                excelDTO.setTableId(order.getTableId());
+                excelDTO.setPackageId(order.getPackageId());
+                excelDTO.setProductName(order.getProductName());
+                excelDTO.setDirectoryName(order.getDirectoryName());
+                excelDTO.setExamName(order.getExamName());
+                excelDTO.setSubjectName(order.getSubjectName());
+                excelDTO.setCourseTypeName(order.getCourseTypeName());
+                excelDTO.setResourceTypeName(order.getResourceTypeName());
+                excelDTO.setProtocolState(order.getProtocolState());
+                dtoList.add(excelDTO);
+            });
+        });
+        LinkedHashMap<Integer, List<ExcelPaymentOrderDTO>> collect = dtoList.stream()
+                .collect(Collectors.groupingBy(ExcelPaymentOrderDTO::getOrderId, LinkedHashMap::new, Collectors.toList()));
+
+
+
+        long t1 = System.currentTimeMillis();
+        System.out.println("导出数量" + dtoList.size() + "，查询时间：" + (t1 - t0));
+        HuToolExcelUtil.exportNeedMergeBigExcel(ExcelPaymentOrderDTO.class,dtoList,collect,
                 "D:" + File.separator + "AAAAA_yyz_wrod" + File.separator + "java" + File.separator + "bbb"+ File.separator +"hutool订单管理.xlsx",
                 "hutoolOrder");
         long t3 = System.currentTimeMillis();

@@ -140,6 +140,7 @@ public class PaymentOrder implements Serializable {
      */
     private String isSecondPromotionClass;
 
+    //==========================================================================
     /**
      * 子订单id
      */
@@ -184,6 +185,7 @@ public class PaymentOrder implements Serializable {
      * 是否签署协议
      */
     private String protocolState;
+    //================================================================================================
 
 
 }

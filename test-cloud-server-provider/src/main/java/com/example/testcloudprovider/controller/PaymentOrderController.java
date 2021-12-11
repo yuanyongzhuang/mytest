@@ -46,5 +46,10 @@ public class PaymentOrderController {
         paymentOrderService.huToolExport();
     }
 
+    @PostMapping("/huToolNeedMergeExport")
+    public void huToolNeedMergeExport(){
+        paymentOrderService.huToolNeedMergeExport();
+    }
+
 }
 

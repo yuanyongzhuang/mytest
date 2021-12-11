@@ -161,7 +161,7 @@ public class ExcelPaymentOrderDTO implements Serializable {
     /**
      * 子订单id
      */
-    @Excel(name = "子订单id", width = 20, needMerge = true,orderNum = "7")
+    @Excel(name = "子订单id", width = 20,orderNum = "7")
     private Integer tableId;
 
     /**
