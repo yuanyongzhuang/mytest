@@ -55,54 +55,63 @@ public class HuToolExcelUtil {
             log.error("数据集合为空，数据类型：{}", clazz);
         }
     }
+
     /**
      * 合并单元格
-     * @param clazz        实体类型
-     * @param dataList     数据集合
-     * @param collect      排序计算
-     * @param destFilePath 文件路径
-     * @param sheetName     sheet名
+     * @param clazz 映射实体
+     * @param dataList
+     * @param collect
+     * @param destFilePath
+     * @param sheetName
      */
-    public static void exportNeedMergeBigExcel(Class clazz,  List<?> dataList, LinkedHashMap<Integer, List<ExcelPaymentOrderDTO>> collect, String destFilePath, String sheetName) {
-        BigExcelWriter bigWriter = ExcelUtil.getBigWriter(destFilePath);
-        //甚至sheet的名称
-        bigWriter.renameSheet(sheetName);
+    public static void exportNeedMergeBigExcel(Class clazz,  List<?> dataList, Map<Integer, Long> collect, String destFilePath, String sheetName) {
+        if(!dataList.isEmpty()){
+            if(dataList.get(0).getClass().equals(clazz)) {
+            BigExcelWriter bigWriter = ExcelUtil.getBigWriter(destFilePath);
+            //甚至sheet的名称
+            bigWriter.renameSheet(sheetName);
 
-        //设置Excel表头
-        List<ExcelHeader> mergeList = setTheMergeHeader(clazz, bigWriter);
+            //设置Excel表头
+            List<ExcelHeader> mergeList = setTheMergeHeader(clazz, bigWriter);
 
-        System.out.println("设置Excel表头:返回合并的表头==" + mergeList);
+            System.out.println("设置Excel表头:返回合并的表头==" + mergeList);
 
-        for(Map.Entry<Integer, List<ExcelPaymentOrderDTO>> listEntry: collect.entrySet()){
-            List<ExcelPaymentOrderDTO> value = listEntry.getValue();
-            //根据条数合并单元格
-            if(value.size() == 1){
-                //一条数据不合并
-                for(ExcelHeader excelHeader: mergeList){
-                    excelHeader.setLineNum(excelHeader.getLineNum()+value.size());
-                }
-            }else{
-                System.out.println("合并列：合并单元列数=="+mergeList.size());
-                //合并
-                for(ExcelHeader excelHeader: mergeList){
-                    System.out.println("合并列：合并行数=="+value.size());
-                    bigWriter.merge(excelHeader.getLineNum(),
-                            excelHeader.getLineNum()+ value.size() -1,
-                            excelHeader.getSortNum(), excelHeader.getSortNum(), null,true);
-                    excelHeader.setLineNum(excelHeader.getLineNum()+value.size());
+            for(Map.Entry<Integer, Long> listEntry: collect.entrySet()){
+                Long value = listEntry.getValue();
+                //根据条数合并单元格
+                if(value == 1){
+                    //一条数据不合并
+                    for(ExcelHeader excelHeader: mergeList){
+                        excelHeader.setLineNum(Math.toIntExact(excelHeader.getLineNum() + value));
+                    }
+                }else{
+                    System.out.println("合并列：合并单元列数=="+mergeList.size());
+                    //合并
+                    for(ExcelHeader excelHeader: mergeList){
+                        System.out.println("合并列：合并行数=="+value);
+                        bigWriter.merge(excelHeader.getLineNum(),
+                                Math.toIntExact(excelHeader.getLineNum() + value - 1),
+                                excelHeader.getSortNum(), excelHeader.getSortNum(), null,true);
+                        excelHeader.setLineNum(Math.toIntExact(excelHeader.getLineNum() + value));
+                    }
                 }
             }
+
+            System.out.println("导出添加数据=="+dataList.size());
+
+            bigWriter.write(dataList, true);
+            // 设置所有列为自动宽度，不考虑合并单元格
+            bigWriter.autoSizeColumnAll();
+            //输出别名
+            bigWriter.setOnlyAlias(true);
+            bigWriter.close();
+            log.info("导出完成!");
+            } else {
+                log.error("数据类型与传入的集合数据类型不一致！数据类型：{}; 集合数据类型：{}", clazz, dataList.get(0).getClass());
+            }
+        }else{
+            log.error("数据集合为空，数据类型：{}", clazz);
         }
-
-        System.out.println("导出添加数据=="+dataList.size());
-
-        bigWriter.write(dataList, true);
-        // 设置所有列为自动宽度，不考虑合并单元格
-        bigWriter.autoSizeColumnAll();
-        //输出别名
-        bigWriter.setOnlyAlias(true);
-        bigWriter.close();
-        log.info("导出完成!");
     }
 
     /**

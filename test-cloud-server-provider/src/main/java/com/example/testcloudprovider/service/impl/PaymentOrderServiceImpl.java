@@ -30,10 +30,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -281,9 +278,9 @@ public class PaymentOrderServiceImpl extends ServiceImpl<PaymentOrderMapper, Pay
                 dtoList.add(excelDTO);
             });
         });
-        LinkedHashMap<Integer, List<ExcelPaymentOrderDTO>> collect = dtoList.stream()
-                .collect(Collectors.groupingBy(ExcelPaymentOrderDTO::getOrderId, LinkedHashMap::new, Collectors.toList()));
-
+        //分组行数
+        Map<Integer, Long> collect = dtoList.stream()
+                .collect(Collectors.groupingBy(ExcelPaymentOrderDTO::getOrderId, Collectors.counting()));
 
 
         long t1 = System.currentTimeMillis();
