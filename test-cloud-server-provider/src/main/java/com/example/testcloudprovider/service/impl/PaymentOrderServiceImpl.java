@@ -266,21 +266,22 @@ public class PaymentOrderServiceImpl extends ServiceImpl<PaymentOrderMapper, Pay
             orderRelationExportDTOS.forEach(order -> {
                 ExcelPaymentOrderDTO excelDTO = new ExcelPaymentOrderDTO();
                 BeanUtils.copyProperties(newOrder,excelDTO);
-                excelDTO.setTableId(order.getTableId());
-                excelDTO.setPackageId(order.getPackageId());
-                excelDTO.setProductName(order.getProductName());
-                excelDTO.setDirectoryName(order.getDirectoryName());
-                excelDTO.setExamName(order.getExamName());
-                excelDTO.setSubjectName(order.getSubjectName());
-                excelDTO.setCourseTypeName(order.getCourseTypeName());
-                excelDTO.setResourceTypeName(order.getResourceTypeName());
-                excelDTO.setProtocolState(order.getProtocolState());
+                BeanUtils.copyProperties(order,excelDTO);
+//                excelDTO.setTableId(order.getTableId());
+//                excelDTO.setPackageId(order.getPackageId());
+//                excelDTO.setProductName(order.getProductName());
+//                excelDTO.setDirectoryName(order.getDirectoryName());
+//                excelDTO.setExamName(order.getExamName());
+//                excelDTO.setSubjectName(order.getSubjectName());
+//                excelDTO.setCourseTypeName(order.getCourseTypeName());
+//                excelDTO.setResourceTypeName(order.getResourceTypeName());
+//                excelDTO.setProtocolState(order.getProtocolState());
                 dtoList.add(excelDTO);
             });
         });
         //分组行数
         Map<Integer, Long> collect = dtoList.stream()
-                .collect(Collectors.groupingBy(ExcelPaymentOrderDTO::getOrderId, Collectors.counting()));
+                .collect(Collectors.groupingBy(ExcelPaymentOrderDTO::getOrderId,LinkedHashMap::new, Collectors.counting()));
 
 
         long t1 = System.currentTimeMillis();
