@@ -45,7 +45,7 @@ public class HuToolExcelUtil {
      * @param destFilePath
      * @param sheetName
      */
-    public static void exportNeedMergeBigExcel(Class clazz,  List<?> dataList, Map<Integer, Long> collect, String destFilePath, String sheetName) {
+    public static void exportNeedMergeBigExcel(Class clazz,  List<?> dataList, LinkedHashMap<Integer, Long> collect, String destFilePath, String sheetName) {
         if(!dataList.isEmpty()){
             if(dataList.get(0).getClass().equals(clazz)) {
             BigExcelWriter bigWriter = ExcelUtil.getBigWriter(destFilePath);
@@ -80,7 +80,7 @@ public class HuToolExcelUtil {
      * @param bigWriter 工具类
      * @param mergeList 合并表头
      */
-    private static void mergeRow(Map<Integer, Long> collect, BigExcelWriter bigWriter, List<ExcelHeader> mergeList) {
+    private static void mergeRow(LinkedHashMap<Integer, Long> collect, BigExcelWriter bigWriter, List<ExcelHeader> mergeList) {
         System.out.println("设置Excel表头:返回合并的表头==" + mergeList);
         if(CollectionUtil.isNotEmpty(mergeList) && CollectionUtil.isNotEmpty(collect)) {
             for (Map.Entry<Integer, Long> listEntry : collect.entrySet()) {
