@@ -82,7 +82,7 @@ public class HuToolExcelUtil {
      */
     private static void mergeRow(Map<Integer, Long> collect, BigExcelWriter bigWriter, List<ExcelHeader> mergeList) {
         System.out.println("设置Excel表头:返回合并的表头==" + mergeList);
-        if(CollectionUtil.isNotEmpty(mergeList) || CollectionUtil.isNotEmpty(collect)) {
+        if(CollectionUtil.isNotEmpty(mergeList) && CollectionUtil.isNotEmpty(collect)) {
             for (Map.Entry<Integer, Long> listEntry : collect.entrySet()) {
                 Long value = listEntry.getValue();
                 //根据条数合并单元格

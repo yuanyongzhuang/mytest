@@ -290,7 +290,8 @@
       <workItem from="1639124623735" duration="2514000" />
       <workItem from="1639147548222" duration="1201000" />
       <workItem from="1639186634942" duration="18688000" />
-      <workItem from="1639231551889" duration="2158000" />
+      <workItem from="1639231551889" duration="3470000" />
+      <workItem from="1639273624673" duration="393000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <created>1636978542617</created>
@@ -411,7 +412,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639220917787</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="导出测试dome">
+      <created>1639235199290</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1639235199290</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
