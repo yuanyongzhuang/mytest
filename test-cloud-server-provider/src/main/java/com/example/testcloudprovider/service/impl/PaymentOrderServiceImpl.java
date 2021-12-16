@@ -249,9 +249,13 @@ public class PaymentOrderServiceImpl extends ServiceImpl<PaymentOrderMapper, Pay
             Order order = new Order();
             Integer orderId = paymentOrder.getOrderId();
             if((30 > orderId && orderId > 27)){
-                orderList.add(order);
-                orderList.add(order);
-                orderList.add(order);
+                for(int i =0; i < 4; i++){
+                    Order order1 = new Order();
+                    order1.setTableId(i+201);
+                    order1.setPackageId(i+300);
+                    order1.setProductName("wwwww"+i);
+                    orderList.add(order1);
+                }
             }
             orderList.add(order);
             dto.setOrderRelationExportDTOS(orderList);
