@@ -1,17 +1,18 @@
 package com.example.testcloudprovider.utils.SXSSFExcelUtils;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.example.testcloudprovider.entity.ExcelHeader;
-import com.example.testcloudprovider.entity.ExcelPaymentOrderDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.formula.functions.T;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.net.URLEncoder;
 import java.util.*;
@@ -46,31 +47,38 @@ public class HuToolExcelUtil {
      * @param sheetName
      */
     public static void exportNeedMergeBigExcel(Class clazz,  List<?> dataList, LinkedHashMap<Integer, Long> collect, String destFilePath, String sheetName) {
-        if(!dataList.isEmpty()){
-            if(dataList.get(0).getClass().equals(clazz)) {
-            BigExcelWriter bigWriter = ExcelUtil.getBigWriter(destFilePath);
-            //甚至sheet的名称
-            bigWriter.renameSheet(sheetName);
+        try {
+            if(!dataList.isEmpty()){
+                if(dataList.get(0).getClass().equals(clazz)) {
+        //            BigExcelWriter bigWriter = ExcelUtil.getBigWriter(destFilePath);
+                ExcelWriter bigWriter = ExcelUtil.getBigWriter(2000);
+                //甚至sheet的名称
+                bigWriter.renameSheet(sheetName);
 
-            //设置Excel表头
-            List<ExcelHeader> mergeList = setTheMergeHeader(clazz, bigWriter);
-            //设置合并行
-            mergeRow(collect, bigWriter, mergeList);
+                //设置Excel表头
+                List<ExcelHeader> mergeList = setTheMergeHeader(clazz, bigWriter);
+                //设置合并行
+                mergeRow(collect, bigWriter, mergeList);
 
-            System.out.println("导出添加数据=="+dataList.size());
+                System.out.println("导出添加数据=="+dataList.size());
 
-            bigWriter.write(dataList, true);
-            // 设置所有列为自动宽度，不考虑合并单元格
-            bigWriter.autoSizeColumnAll();
-            //输出别名
-            bigWriter.setOnlyAlias(true);
-            bigWriter.close();
-            log.info("导出完成!");
-            } else {
-                log.error("数据类型与传入的集合数据类型不一致！数据类型：{}; 集合数据类型：{}", clazz, dataList.get(0).getClass());
+                bigWriter.write(dataList, true);
+                // 设置所有列为自动宽度，不考虑合并单元格
+                bigWriter.autoSizeColumnAll();
+                //输出别名
+                bigWriter.setOnlyAlias(true);
+                OutputStream out = new FileOutputStream(destFilePath);
+                bigWriter.flush(out);
+                bigWriter.close();
+                log.info("导出完成!");
+                } else {
+                    log.error("数据类型与传入的集合数据类型不一致！数据类型：{}; 集合数据类型：{}", clazz, dataList.get(0).getClass());
+                }
+            }else{
+                log.error("数据集合为空，数据类型：{}", clazz);
             }
-        }else{
-            log.error("数据集合为空，数据类型：{}", clazz);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -80,7 +88,7 @@ public class HuToolExcelUtil {
      * @param bigWriter 工具类
      * @param mergeList 合并表头
      */
-    private static void mergeRow(LinkedHashMap<Integer, Long> collect, BigExcelWriter bigWriter, List<ExcelHeader> mergeList) {
+    private static void mergeRow(LinkedHashMap<Integer, Long> collect, ExcelWriter bigWriter, List<ExcelHeader> mergeList) {
         System.out.println("设置Excel表头:返回合并的表头==" + mergeList);
         if(CollectionUtil.isNotEmpty(mergeList) && CollectionUtil.isNotEmpty(collect)) {
             for (Map.Entry<Integer, Long> listEntry : collect.entrySet()) {
@@ -111,7 +119,7 @@ public class HuToolExcelUtil {
      * @param clazz 映射实体
      * @param bigWriter
      */
-    private static List<ExcelHeader> setTheMergeHeader(Class clazz, BigExcelWriter bigWriter) {
+    private static List<ExcelHeader> setTheMergeHeader(Class clazz, ExcelWriter bigWriter) {
         //获取当前类字段
         Field[] fields = clazz.getDeclaredFields();
         //字段中文名称集合（获取注解@Excel的name和orderNum排序值）集合存储
