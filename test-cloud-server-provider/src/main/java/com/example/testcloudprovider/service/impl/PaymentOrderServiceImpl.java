@@ -239,7 +239,16 @@ public class PaymentOrderServiceImpl extends ServiceImpl<PaymentOrderMapper, Pay
     @Override
     public void huToolNeedMergeExport() {
         long t0 = System.currentTimeMillis();
-        List<PaymentOrder> list = this.list(new LambdaQueryWrapper<>());
+        List<Integer> ids = new ArrayList<>();
+        ids.add(25);
+        ids.add(26);
+        ids.add(27);
+        ids.add(28);
+        ids.add(29);
+        ids.add(30);
+        ids.add(31);
+        ids.add(32);
+        List<PaymentOrder> list = this.list(new LambdaQueryWrapper<PaymentOrder>().in(PaymentOrder::getOrderId,ids));
         //模拟订单中有多个子订单
         List<NewExcelOrderDTO> newOrderList = new ArrayList<>();
         list.forEach(paymentOrder -> {
@@ -248,16 +257,22 @@ public class PaymentOrderServiceImpl extends ServiceImpl<PaymentOrderMapper, Pay
             List<Order> orderList = new ArrayList<>();
             Order order = new Order();
             Integer orderId = paymentOrder.getOrderId();
+            List<Order> orders = new ArrayList<>();
+
             if((30 > orderId && orderId > 27)){
                 for(int i =0; i < 4; i++){
                     Order order1 = new Order();
                     order1.setTableId(i+201);
                     order1.setPackageId(i+300);
                     order1.setProductName("wwwww"+i);
-                    orderList.add(order1);
+                    orders.add(order1);
                 }
+            }else{
+                orders.add(order);
             }
-            orderList.add(order);
+            for(Order order2: orders){
+                orderList.add(order);
+            }
             dto.setOrderRelationExportDTOS(orderList);
 
             newOrderList.add(dto);
@@ -282,7 +297,7 @@ public class PaymentOrderServiceImpl extends ServiceImpl<PaymentOrderMapper, Pay
         long t1 = System.currentTimeMillis();
         System.out.println("导出数量" + dtoList.size() + "，查询时间：" + (t1 - t0));
         HuToolExcelUtil.exportNeedMergeBigExcel(ExcelPaymentOrderDTO.class,dtoList,collect,
-                "D:" + File.separator + "AAAAA_yyz_wrod" + File.separator + "java" + File.separator + "bbb"+ File.separator +"hutool订单管理.xlsx",
+                "D:" + File.separator + "AAAAA_yyz_wrod" + File.separator + "java" + File.separator + "bbb"+ File.separator +"hutool订单管理"+t0+".xlsx",
                 "hutoolOrder");
         long t3 = System.currentTimeMillis();
         System.out.println("导出完成，完成时间：" + (t3 - t0));

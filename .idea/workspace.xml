@@ -7,7 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="20956f39-ac40-4eb7-a717-fbcae58a7efd" name="Default Changelist" comment="">
+    <list default="true" id="20956f39-ac40-4eb7-a717-fbcae58a7efd" name="Default Changelist" comment="导出测试dome">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test-cloud-server-provider/src/main/java/com/example/testcloudprovider/service/impl/PaymentOrderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/test-cloud-server-provider/src/main/java/com/example/testcloudprovider/service/impl/PaymentOrderServiceImpl.java" afterDir="false" />
     </list>
@@ -283,7 +283,8 @@
       <workItem from="1639493899868" duration="1125000" />
       <workItem from="1639531415911" duration="20000" />
       <workItem from="1639560518385" duration="153000" />
-      <workItem from="1639623328293" duration="3050000" />
+      <workItem from="1639623328293" duration="3201000" />
+      <workItem from="1639661835608" duration="2475000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <created>1636978542617</created>
@@ -439,7 +440,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639623870469</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="导出测试dome">
+      <created>1639654268224</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1639654268224</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
