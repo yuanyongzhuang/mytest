@@ -2,11 +2,13 @@ package com.example.testcloudprovider.utils.SXSSFExcelUtils;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.poi.excel.BigExcelWriter;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.example.testcloudprovider.entity.ExcelHeader;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.formula.functions.T;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -50,8 +52,10 @@ public class HuToolExcelUtil {
         try {
             if(!dataList.isEmpty()){
                 if(dataList.get(0).getClass().equals(clazz)) {
-        //            BigExcelWriter bigWriter = ExcelUtil.getBigWriter(destFilePath);
-                ExcelWriter bigWriter = ExcelUtil.getBigWriter(2000);
+                BigExcelWriter bigWriter = ExcelUtil.getBigWriter(destFilePath);
+//                ExcelWriter bigWriter = ExcelUtil.getBigWriter(2000);
+                SXSSFSheet sheet = (SXSSFSheet) bigWriter.getSheet();
+                sheet.setRandomAccessWindowSize(-1);
                 //甚至sheet的名称
                 bigWriter.renameSheet(sheetName);
 
@@ -64,11 +68,11 @@ public class HuToolExcelUtil {
 
                 bigWriter.write(dataList, true);
                 // 设置所有列为自动宽度，不考虑合并单元格
-                bigWriter.autoSizeColumnAll();
+//                bigWriter.autoSizeColumnAll();
                 //输出别名
                 bigWriter.setOnlyAlias(true);
-                OutputStream out = new FileOutputStream(destFilePath);
-                bigWriter.flush(out);
+//                OutputStream out = new FileOutputStream(destFilePath);
+//                bigWriter.flush(out);
                 bigWriter.close();
                 log.info("导出完成!");
                 } else {
@@ -77,7 +81,7 @@ public class HuToolExcelUtil {
             }else{
                 log.error("数据集合为空，数据类型：{}", clazz);
             }
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

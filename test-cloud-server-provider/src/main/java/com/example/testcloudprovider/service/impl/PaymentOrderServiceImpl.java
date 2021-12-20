@@ -239,16 +239,17 @@ public class PaymentOrderServiceImpl extends ServiceImpl<PaymentOrderMapper, Pay
     @Override
     public void huToolNeedMergeExport() {
         long t0 = System.currentTimeMillis();
-        List<Integer> ids = new ArrayList<>();
-        ids.add(25);
-        ids.add(26);
-        ids.add(27);
-        ids.add(28);
-        ids.add(29);
-        ids.add(30);
-        ids.add(31);
-        ids.add(32);
-        List<PaymentOrder> list = this.list(new LambdaQueryWrapper<PaymentOrder>().in(PaymentOrder::getOrderId,ids));
+//        List<Integer> ids = new ArrayList<>();
+//        ids.add(25);
+//        ids.add(26);
+//        ids.add(27);
+//        ids.add(28);
+//        ids.add(29);
+//        ids.add(30);
+//        ids.add(31);
+//        ids.add(32);
+//        List<PaymentOrder> list = this.list(new LambdaQueryWrapper<PaymentOrder>().in(PaymentOrder::getOrderId,ids));
+        List<PaymentOrder> list = this.list(new LambdaQueryWrapper<PaymentOrder>());
         //模拟订单中有多个子订单
         List<NewExcelOrderDTO> newOrderList = new ArrayList<>();
         list.forEach(paymentOrder -> {
@@ -271,7 +272,7 @@ public class PaymentOrderServiceImpl extends ServiceImpl<PaymentOrderMapper, Pay
                 orders.add(order);
             }
             for(Order order2: orders){
-                orderList.add(order);
+                orderList.add(order2);
             }
             dto.setOrderRelationExportDTOS(orderList);
 
@@ -289,14 +290,17 @@ public class PaymentOrderServiceImpl extends ServiceImpl<PaymentOrderMapper, Pay
                 dtoList.add(excelDTO);
             });
         });
-        //分组行数
-        LinkedHashMap<Integer, Long> collect = dtoList.stream()
-                .collect(Collectors.groupingBy(ExcelPaymentOrderDTO::getOrderId,LinkedHashMap::new, Collectors.counting()));
+//        //分组行数
+//        LinkedHashMap<Integer, Long> collect = dtoList.stream()
+//                .collect(Collectors.groupingBy(ExcelPaymentOrderDTO::getOrderId,LinkedHashMap::new, Collectors.counting()));
 
 
         long t1 = System.currentTimeMillis();
         System.out.println("导出数量" + dtoList.size() + "，查询时间：" + (t1 - t0));
-        HuToolExcelUtil.exportNeedMergeBigExcel(ExcelPaymentOrderDTO.class,dtoList,collect,
+//        HuToolExcelUtil.exportNeedMergeBigExcel(ExcelPaymentOrderDTO.class,dtoList,collect,
+//                "D:" + File.separator + "AAAAA_yyz_wrod" + File.separator + "java" + File.separator + "bbb"+ File.separator +"hutool订单管理"+t0+".xlsx",
+//                "hutoolOrder");
+        HuToolExcelUtil.exportBigExcel(ExcelPaymentOrderDTO.class,dtoList,
                 "D:" + File.separator + "AAAAA_yyz_wrod" + File.separator + "java" + File.separator + "bbb"+ File.separator +"hutool订单管理"+t0+".xlsx",
                 "hutoolOrder");
         long t3 = System.currentTimeMillis();
