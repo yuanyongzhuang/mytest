@@ -54,8 +54,8 @@ public class HuToolExcelUtil {
                 if(dataList.get(0).getClass().equals(clazz)) {
                 BigExcelWriter bigWriter = ExcelUtil.getBigWriter(destFilePath);
 //                ExcelWriter bigWriter = ExcelUtil.getBigWriter(2000);
-                SXSSFSheet sheet = (SXSSFSheet) bigWriter.getSheet();
-                sheet.setRandomAccessWindowSize(-1);
+//                SXSSFSheet sheet = (SXSSFSheet) bigWriter.getSheet();
+//                sheet.setRandomAccessWindowSize(-1);
                 //甚至sheet的名称
                 bigWriter.renameSheet(sheetName);
 
