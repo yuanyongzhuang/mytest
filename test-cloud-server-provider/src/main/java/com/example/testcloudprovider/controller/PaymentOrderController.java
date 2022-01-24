@@ -50,6 +50,10 @@ public class PaymentOrderController {
     public void huToolNeedMergeExport(){
         paymentOrderService.huToolNeedMergeExport();
     }
+    @PostMapping("/poiMergeExport")
+    public void poiMergeExport(){
+        paymentOrderService.poiMergeExport();
+    }
 
 }
 
