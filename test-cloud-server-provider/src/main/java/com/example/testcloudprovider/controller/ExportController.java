@@ -1,6 +1,7 @@
 package com.example.testcloudprovider.controller;
 
 import com.example.testcloudprovider.service.IExportJobService;
+import com.example.testcloudprovider.utils.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,6 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping({"/export"})
@@ -74,5 +78,16 @@ public class ExportController {
     @ResponseBody
     public String exportOrder() {
         return this.exportJobService.export();
+    }
+
+    public static void main(String[] args) {
+//        String lastMonth = DateTimeUtil.getLastMonth();
+//        String entryTimeStr = DateTimeUtil.getDateTimeStr(DateTimeUtil.getStrToDateTime("2022-01-15 00:00:00"), "yyyyMM");
+//        System.out.println(Integer.valueOf(lastMonth)-Integer.valueOf(entryTimeStr));
+
+            String text = "huhantain,taiyangshen,nodeli";
+            List<String> list1 = new ArrayList<>();
+            Collections.addAll(list1,text);
+            System.out.println(list1);
     }
 }

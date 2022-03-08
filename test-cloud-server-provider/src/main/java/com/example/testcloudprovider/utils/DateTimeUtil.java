@@ -485,4 +485,13 @@ public class DateTimeUtil {
         SimpleDateFormat format = new SimpleDateFormat(pattern);
         return format.format(date);
     }
+    /**
+     * 获取当前时间的上个月
+     */
+    public static String getLastMonth(){
+        LocalDateTime now = LocalDateTime.now();
+        now = now.minusMonths(1);
+        String ym = now.format(DateTimeFormatter.ofPattern("yyyyMM"));
+        return ym;
+    }
 }
